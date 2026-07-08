@@ -1,0 +1,24 @@
+services:
+  mariadb:
+    build: ./requirements/mariadb
+    container_name: mariadb
+    env_file: .env
+    volumes:
+      -db_data:var/lib/mysql
+    networks:
+      inception
+    restart: always
+
+volumes:
+  db_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/atashiro/data/mariadb
+
+networks:
+  inception:
+    driver: bridge
+
+
