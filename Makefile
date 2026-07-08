@@ -20,7 +20,6 @@ fclean:
 		sudo rm -rf $(DATA)
 		docker system prune -af
 
-re:
-		fclean all
+re:		fclean all
 
-.PHONY: all down clean fclean re 
+.PHONY: all down clean fclean re

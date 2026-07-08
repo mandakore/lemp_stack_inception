@@ -21,6 +21,20 @@ services:
       - mariadb
     restart: always
 
+  nginx:
+
+    build: ./requirements/nginx
+    container_name: nginx
+    ports:
+      - "443:443"
+    volumes:
+      - wp_data:/var/www/html
+    networks:
+      - inception
+    depends_on:
+      - wordpress
+    restart: always
+
 volumes:
   db_data:
     driver: local
