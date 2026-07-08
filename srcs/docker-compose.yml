@@ -4,9 +4,21 @@ services:
     container_name: mariadb
     env_file: .env
     volumes:
-      -db_data:var/lib/mysql
+      - db_data:/var/lib/mysql
     networks:
-      inception
+      - inception
+    restart: always
+
+  wordpress:
+    build: ./requirements/wordpress
+    container_name: wordpress
+    env_file: .env
+    volumes:
+      - wp_data:/var/www/html
+    networks:
+      - inception
+    depends_on:
+      - mariadb
     restart: always
 
 volumes:
@@ -16,6 +28,13 @@ volumes:
       type: none
       o: bind
       device: /home/atashiro/data/mariadb
+
+  wp_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/atashiro/data/wordpress
 
 networks:
   inception:
