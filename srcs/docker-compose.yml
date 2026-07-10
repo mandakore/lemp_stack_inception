@@ -3,6 +3,9 @@ services:
     build: ./requirements/mariadb
     container_name: mariadb
     env_file: .env
+    secrets:
+      - db_root_password
+      - db_password
     volumes:
       - db_data:/var/lib/mysql
     networks:
@@ -13,6 +16,9 @@ services:
     build: ./requirements/wordpress
     container_name: wordpress
     env_file: .env
+    secrets:
+      - db_password
+      - credentials
     volumes:
       - wp_data:/var/www/html
     networks:
@@ -53,5 +59,13 @@ volumes:
 networks:
   inception:
     driver: bridge
+
+secrets:
+  db_root_password:
+    file: ../secrets/db_root_password.txt
+  db_password:
+    file: ../secrets/db_password.txt
+  credentials:
+    file: ../secrets/credentials.txt
 
 

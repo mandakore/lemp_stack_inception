@@ -2,6 +2,11 @@
 
 set -e
 
+MYSQL_PASSWORD=$(cat /run/secrets/db_password)
+set -a
+source /run/secrets/credentials
+set +a
+
 until mariadb -h mariadb -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SELECT 1" >/dev/null 2>&1; do
 
 	echo "MariaDBの起動を待っています..."
